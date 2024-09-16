@@ -27,9 +27,9 @@ ThemeData lightTheme(BuildContext context) {
       errorBorder: _defaultInputBorder,
     ),
     colorScheme: const ColorScheme.light(
-      primary: Color.fromRGBO(4, 6, 136, 1),
-      secondary: Color.fromRGBO(2, 71, 254, 1),
-      tertiary: Color.fromRGBO(0, 20, 47, 1),
+      primary: Color.fromRGBO(37, 99, 235, 1),
+      secondary: Color.fromRGBO(33, 136, 255, 1),
+      tertiary: Color.fromRGBO(23, 25, 45, 1),
       error: Color(0xffEB5757),
     ),
     textTheme: const TextTheme(     
@@ -78,9 +78,9 @@ ThemeData lightTheme(BuildContext context) {
     ),
     extensions: const [
       DynamicColors(
-        primary: Color.fromRGBO(21, 24, 231, 1),
-        secondary: Color.fromRGBO(58, 108, 246, 1),
-        tertiary: Color.fromRGBO(0, 20, 47, 1),
+        primary: Color.fromRGBO(37, 99, 235, 1),
+        secondary: Color.fromRGBO(33, 136, 255, 1),
+        tertiary: Color.fromRGBO(23, 25, 45, 1),
         error: Color(0xffEB5757),
         black: Color(0xff000000),
         appBackground: Color(0xffFFFFFF),

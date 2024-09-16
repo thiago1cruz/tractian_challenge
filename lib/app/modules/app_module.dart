@@ -11,7 +11,7 @@ class AppModule extends Module  {
   @override
   void routes(r) {
     r.child('/', child: (context) => const SpalshScreen());
-    r.module('/assts', module: AssetsModule());   
+    r.module('/assets', module: AssetsModule());   
   }
 
 }
