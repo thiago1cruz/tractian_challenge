@@ -18,15 +18,21 @@ class _SpalshScreenState extends State<SpalshScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child:  Column(
-        children: [
-          Image.asset('assets/img/logo.png'),
-          const SizedBox(height: 20,),
-          const CircularProgressIndicator(),
-          const SizedBox(height: 20),
-          const Text('Loading Challenge...'),
-        ],
+    final size = MediaQuery.of(context).size;
+    final witdh = size.width;
+    return Scaffold(
+      body: Center(
+        child:  Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/img/logo.png', width: witdh * 0.7,),
+            const SizedBox(height: 20,),
+            const CircularProgressIndicator(),
+            const SizedBox(height: 20),
+            const Text('Loading Challenge...'),
+          ],
+        ),
       ),
     );
   }
