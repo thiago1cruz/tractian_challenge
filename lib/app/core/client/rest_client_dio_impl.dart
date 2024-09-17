@@ -5,13 +5,12 @@ import 'package:tractian_challenge/app/core/errors/failures.dart';
 
 import 'i_client_http.dart';
 
-class DioFactory {
-    DioFactory();
+class DioFactory {    
   static http.Dio dio() {
      final baseOptions = http.BaseOptions(
       baseUrl: baseUrl,
-      connectTimeout: const Duration(milliseconds: configTimeout),
-      receiveTimeout: const Duration(microseconds: configReceiveTimeout),   
+      connectTimeout: const Duration(seconds: configTimeout),
+      receiveTimeout: const Duration(seconds: configReceiveTimeout),   
       receiveDataWhenStatusError: true,
       followRedirects: true,      
     );
