@@ -57,13 +57,18 @@ flutter pub get
      flutter run -t lib/main.dart
      ```
 
+## Arquitetura
+
+O desing de arquitetura foi baseado na [`Clen Dart 2.0`](https://github.com/Flutterando/Clean-Dart/tree/2.0), proposta pela comunidadde Flutterano, uma das maiores comunidades de referencia para desenvolvimento Flutter no Brasil.
+
+
 
 # Instruçoes de Envio
 
 **Link do Video**: 
 [`Assistir ao vídeo`](./assets/video/tractian_challenge.mp4).
 
-Caso algum problema ocorra a qui esta o link do video hospeado no Youtube [`Video - Youtube`](https://youtu.be/cRni5hjPc4g).
+Caso algum problema ocorra a qui esta o link do video hospedado no Youtube [`Video - Youtube`](https://youtu.be/cRni5hjPc4g).
 
 
 **Potons de Melhoria**: 
