@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tractian_challenge/app/core/constants/app_dimensions.dart';
 
 import '../../constants/app_font_size.dart';
 
 const _defaultInputBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(8)),
+    borderRadius: BorderRadius.all(Radius.circular(AppDimensions.smallBorderRadius -1)),
     borderSide: BorderSide.none);
 
 ThemeData lightTheme(BuildContext context) {
   return ThemeData(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color.fromRGBO(23, 25, 45, 1),
+      elevation: 0,
+      iconTheme: IconThemeData(color: Color(0xffFFFFFF)),
+      titleTextStyle: TextStyle(color: Color(0xffFFFFFF)),
+      centerTitle: true,      
+    ),
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder: (context) =>  SvgPicture.asset('assets/icons/arrow_back.svg'),
+    ),
+    hintColor: const Color.fromRGBO(119, 129, 140, 1),
+    
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
       errorStyle: TextStyle(
@@ -34,50 +48,55 @@ ThemeData lightTheme(BuildContext context) {
     ),
     textTheme: const TextTheme(     
       headlineLarge: TextStyle(
-        fontFamily: 'DynamicPoppins',
+        fontFamily: 'Roboto',
         fontWeight: FontWeight.w700,
         fontSize: AppFontSize.large,
       ),  
+      titleLarge: TextStyle(
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w500,
+        fontSize: AppFontSize.extraLarge,
+      ),
       titleMedium: TextStyle(
-        fontFamily: 'DynamicPoppins',
-        fontWeight: FontWeight.w600,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w500,
         fontSize: AppFontSize.medium,
       ),
       titleSmall: TextStyle(
-        fontFamily: 'DynamicPoppins',
+        fontFamily: 'Roboto',
         fontWeight: FontWeight.w400,
         fontSize: AppFontSize.medium,
       ),
       bodyLarge: TextStyle(
-        fontFamily: 'DynamicPoppins',
+        fontFamily: 'Roboto',
         fontWeight: FontWeight.w700,
         fontSize: AppFontSize.medium,
       ),
       bodyMedium: TextStyle(
-        fontFamily: 'DynamicPoppins',
+        fontFamily: 'Roboto',
         fontWeight: FontWeight.w600,
         fontSize: AppFontSize.medium,
       ),
       bodySmall: TextStyle(
-        fontFamily: 'DynamicPoppins',
+        fontFamily: 'Roboto',
         fontWeight: FontWeight.w400,
         fontSize: AppFontSize.medium,
       ),
       labelLarge: TextStyle(
-          fontFamily: 'DynamicPoppins', fontWeight: FontWeight.w700, fontSize: 1),
+          fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 1),
       labelMedium: TextStyle(
-        fontFamily: 'DynamicPoppins',
+        fontFamily: 'Roboto',
         fontWeight: FontWeight.w600,
         fontSize: AppFontSize.small,
       ),
       labelSmall: TextStyle(
-        fontFamily: 'DynamicPoppins',
+        fontFamily: 'Roboto',
         fontWeight: FontWeight.w400,
         fontSize: AppFontSize.small,
       ),
     ),
     extensions: const [
-      DynamicColors(
+      TractianColors(
         primary: Color.fromRGBO(37, 99, 235, 1),
         secondary: Color.fromRGBO(33, 136, 255, 1),
         tertiary: Color.fromRGBO(23, 25, 45, 1),
@@ -85,7 +104,7 @@ ThemeData lightTheme(BuildContext context) {
         black: Color(0xff000000),
         appBackground: Color(0xffFFFFFF),
         textColor: Color(0xffFFFFFF),      
-        grey: Color.fromARGB(255, 166, 169, 173),
+        grey: Color.fromRGBO(119, 129, 140, 1),
         iconColor: Color.fromARGB(255, 0, 0, 8),   
         white: Color(0xffFFFFFF),
         success: Color(0xff00FF85),   
@@ -94,8 +113,8 @@ ThemeData lightTheme(BuildContext context) {
   );
 }
 
-class DynamicColors extends ThemeExtension<DynamicColors> {
-  const DynamicColors({
+class TractianColors extends ThemeExtension<TractianColors> {
+  const TractianColors({
     required this.primary,
     required this.secondary,
     required this.tertiary,
@@ -121,12 +140,12 @@ class DynamicColors extends ThemeExtension<DynamicColors> {
   final Color white;  
   final Color iconColor;  
 
-  static DynamicColors of(BuildContext context) {
-    return Theme.of(context).extension<DynamicColors>()!;
+  static TractianColors of(BuildContext context) {
+    return Theme.of(context).extension<TractianColors>()!;
   }
 
   @override
-  ThemeExtension<DynamicColors> copyWith({
+  ThemeExtension<TractianColors> copyWith({
     Color? primary,
     Color? secondary,
     Color? tertiary,
@@ -140,7 +159,7 @@ class DynamicColors extends ThemeExtension<DynamicColors> {
     Color? iconColor,
     
   }) {
-    return DynamicColors(
+    return TractianColors(
       primary: primary ?? this.primary,
       secondary: secondary ?? this.secondary,
       tertiary: tertiary ?? this.tertiary,
@@ -157,15 +176,15 @@ class DynamicColors extends ThemeExtension<DynamicColors> {
   }
 
   @override
-  ThemeExtension<DynamicColors> lerp(
-    covariant ThemeExtension<DynamicColors>? other,
+  ThemeExtension<TractianColors> lerp(
+    covariant ThemeExtension<TractianColors>? other,
     double t,
   ) {
-    if (other is! DynamicColors) {
+    if (other is! TractianColors) {
       return this;
     }
 
-    return DynamicColors(
+    return TractianColors(
       primary: Color.lerp(primary, other.primary, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
       tertiary: Color.lerp(tertiary, other.tertiary, t)!,
