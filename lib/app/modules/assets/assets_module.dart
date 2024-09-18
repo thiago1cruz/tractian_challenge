@@ -23,7 +23,7 @@ class AssetsModule extends Module {
   @override
   void routes(RouteManager r) {
     r.child('/', child: (context) =>  ChooseCompanyPage(controller: Modular.get<AssetsController>()));
-    r.child('/assets', child: (context) => AssetsPage(controller: Modular.get<AssetsController>(), idCompany: r.args.data,));
+    r.child('/assets', child: (context) => AssetsPage(controller: Modular.get<AssetsController>(), companyId: r.args.data,));
     super.routes(r);
   }
 

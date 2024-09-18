@@ -33,8 +33,8 @@ Future getCompanies() async{
 }
 
 
-Future getAssets({required companyId}) async{
-  if(companyId == null){
+Future getAssets({required String companyId}) async{
+  if(companyId.isEmpty){
     setAssetsState(ErrorState(exception: ParametersEmptyError(message: 'Company ID is required')));
     return;
   }

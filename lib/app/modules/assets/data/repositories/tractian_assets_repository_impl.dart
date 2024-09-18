@@ -15,33 +15,35 @@ class TractianAssetsRepositoryImpl implements IAssetsRepository {
 
   @override
   Future<AssetsState> getAssets({required String companyId}) async {
-    final locationsUrl = '/$companyId$locations';
-    final assetsUrl = '/$companyId$assets';
+    final locationsUrl = '/companies/$companyId$locations';
+    final assetsUrl = '/companies/$companyId$assets';
 
     try {
       final result = await Future.wait(
           [_clientHttp.get(locationsUrl), _clientHttp.get(assetsUrl)]);
 
-      final dataResilt = result.firstWhere(
+      final dataResilt = result.where(
         (result) => result.statusCode != HttpStatus.ok,
       );
 
       if (result[0].statusCode == HttpStatus.ok &&
           result[1].statusCode == HttpStatus.ok) {
-        final assetsData = result[1].data;
-        final locationData = result[0].data;
+        final assetsData = List<Map<String, dynamic>>.from(result[1].data);
+        final locationData = List<Map<String, dynamic>>.from(result[0].data);
+
         final data = AssetsAdapter.fromJson(assetsData, locationData);
         return SuccessState(data: data);
-      } else if (dataResilt.statusCode == HttpStatus.internalServerError) {
+      } else if (dataResilt.first.statusCode ==
+          HttpStatus.internalServerError) {
         return ErrorState(
             exception: ServerException(
-                message: dataResilt.data['message'] ??
+                message: dataResilt.first.data['message'] ??
                     'Desculpe, houve uma falha em nossos serviços'));
       }
 
       return ErrorState(
           exception: ServerException(
-              message: dataResilt.data['message'] ??
+              message: dataResilt.first.data['message'] ??
                   'Desculpe, tente novamente mais tarde!'));
     } catch (e) {
       return ErrorState(
@@ -58,7 +60,8 @@ class TractianAssetsRepositoryImpl implements IAssetsRepository {
 
       if (result.statusCode == HttpStatus.ok) {
         final jsonData = result.data as List;
-        final data = jsonData.map((map) => CompaniesAdpter.fromJson(map)).toList() ;
+        final data =
+            jsonData.map((map) => CompaniesAdpter.fromJson(map)).toList();
         return SuccessCompaniesState(data: data);
       } else if (result.statusCode == HttpStatus.internalServerError) {
         return ErrorCompaniesState(

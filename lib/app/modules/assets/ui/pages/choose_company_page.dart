@@ -51,10 +51,17 @@ class _ChooseCompanyPageState extends State<ChooseCompanyPage> {
               itemCount: companies.length,
               padding: const EdgeInsets.symmetric(
                   horizontal: AppDimensions.largePadding,
-                  vertical: AppDimensions.smallPadding),
+                  vertical: AppDimensions.extraLargePadding),
               itemBuilder: (context, index) {
                 final company = companies[index];
-                return CompanyCard(company: company);
+                return Column(
+                  children: [
+                    CompanyCard(company: company),
+                    const SizedBox(
+                      height: 40,
+                    )
+                  ],
+                );
               },
             ),
         });
