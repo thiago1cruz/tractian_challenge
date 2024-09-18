@@ -28,6 +28,7 @@ class _TreeNodeWidgetState extends State<TreeNodeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +63,7 @@ class _TreeNodeWidgetState extends State<TreeNodeWidget> {
                   const SizedBox(width: 8),
                   Image.asset('assets/icons/${_node.type.name}.png', width: 18),
                   const SizedBox(width: 8),
-                  Text(_node.name),
+                  Text(_node.name, style: textTheme.titleSmall,),
                   const SizedBox(width: 8),
                   if (_node.status != null)
                     _getIconStatus(_node.status!),
@@ -92,10 +93,9 @@ class _TreeNodeWidgetState extends State<TreeNodeWidget> {
 
   Widget _getIconStatus(String status) {
     return switch (status) {
-      'operating' => const Icon(Icons.flash_on_outlined, color: Colors.green, size: 15),
-      'intervening' => const Icon(Icons.report_problem_outlined, color: Colors.yellow, size: 15),
-      'without_operation' => const Icon(Icons.flash_off_outlined, color: Colors.red, size: 15),
-      _ => Container(),
+      'operating' => Image.asset( 'assets/icons/bolt_01.png',),      
+      'alert' => Image.asset( 'assets/icons/elipse.png',),
+      _ => const SizedBox(),
     };
   }
 }

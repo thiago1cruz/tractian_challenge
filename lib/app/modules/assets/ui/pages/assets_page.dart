@@ -21,6 +21,7 @@ class AssetsPage extends StatefulWidget {
 class _AssetsPageState extends State<AssetsPage> {
   late final AssetsController controller;
   late final String idCompany;
+  TreeNodeController? treeController;
 
   @override
   void initState() {
@@ -46,6 +47,9 @@ class _AssetsPageState extends State<AssetsPage> {
     final textTheme = Theme.of(context).textTheme;
     final color = TractianColors.of(context);
     final state = controller.assetsState;
+    if (state is SuccessState){
+      treeController = TreeNodeController(locations: state.data.locations, assets:  state.data.assets);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Assets',
@@ -62,7 +66,7 @@ class _AssetsPageState extends State<AssetsPage> {
                     border: Border(
                         bottom: BorderSide(color: color.grey, width: 0.3))),
                 child: Filter(
-                  controller: controller,
+                  controller: treeController,                
                 ),
               ),
             ],
@@ -90,9 +94,8 @@ class _AssetsPageState extends State<AssetsPage> {
             ))),
           if (state is SuccessState)
             Expanded(child: Builder(
-              builder: (context) {
-                final treeController = TreeNodeController(locations: state.data.locations, assets:  state.data.assets);
-                return TreeComponent(treeController: treeController);
+              builder: (context) {                 
+                return TreeComponent(treeController: treeController!);
               }
             ))
         ],
