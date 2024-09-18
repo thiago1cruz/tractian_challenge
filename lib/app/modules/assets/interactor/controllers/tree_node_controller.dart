@@ -1,9 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:tractian_challenge/app/modules/assets/interactor/entities/tree_node_entity.dart';
+import 'package:tractian_challenge/app/modules/assets/interactor/states/tree_node_state.dart';
 import '../entities/asset_entity.dart';
 import '../entities/location_entity.dart';
 import 'package:async/async.dart';
 
-class TreeNodeController {
+class TreeNodeController extends ChangeNotifier {
+  TreeNodeState state = InitialTreeNodeState();
+
+  setNodeState(TreeNodeState value) {
+    state = value;
+    notifyListeners();
+  }
+
   TreeNodeController(
       {required List<LocationEntity> locations,
       required List<AssetEntity> assets}) {
@@ -17,6 +26,8 @@ class TreeNodeController {
 
   late TreeBuilder _treeBuilder;
 
+  List<TreeNodeEntity> _notFilteredNode = [];
+
   Future<void> _initialize() async {
     _treeBuilder = TreeBuilder(locations: _locations, assets: _assets);
     _treeBuilder.buildTree();
@@ -24,13 +35,14 @@ class TreeNodeController {
 
   CancelableOperation<List<AssetEntity>>? _cancellableOperation;
 
-  Future<List<TreeNodeEntity>> loadTreeData() async {
+  Future<void> loadTreeData() async {
+    setNodeState(LoadingTreeNodeState());
     List<TreeNodeEntity> rootNodes = [
       ..._locations.where((e) => e.parentId == null).map(_convertToTreeNode),
       ..._treeBuilder.orphanAssets.map(_convertToTreeNodeFromAsset),
     ];
-
-    return rootNodes;
+    _notFilteredNode = rootNodes;
+    setNodeState(SuccessTreeNodeState(data: rootNodes));
   }
 
   Future<List<TreeNodeEntity>> loadChildrenForNode(String nodeId) async {
@@ -46,8 +58,10 @@ class TreeNodeController {
     return children;
   }
 
-  Future<List<TreeNodeEntity>> loadChildrenForFilteredAssets(
+  Future<void> loadChildrenForFilteredAssets(
       List<AssetEntity> filteredAssets) async {
+    setNodeState(LoadingTreeNodeState());
+
     final Map<String, TreeNodeEntity> nodeMap = {};
 
     void buildTreeRecursively(AssetEntity asset) {
@@ -93,7 +107,54 @@ class TreeNodeController {
             nodeMap.values.every((parent) => !parent.children.contains(node)))
         .toList();
 
-    return rootNodes;
+    setNodeState(SuccessTreeNodeState(data: rootNodes));
+  }
+
+  Future<List<AssetEntity>> filterAssetsByName(String name) async {
+    setNodeState(LoadingTreeNodeState());
+
+    if (name.isEmpty) {
+      SuccessTreeNodeState(data: _notFilteredNode);
+      return [];
+    }
+
+    final filteredAssets = await compute<List<AssetEntity>, List<AssetEntity>>(
+        (assets) => assets
+            .where((asset) =>
+                asset.name.toLowerCase().contains(name.toLowerCase()))
+            .toList(),
+        _assets);
+
+    return filteredAssets;
+  }
+
+  Future<List<AssetEntity>> filterAssetsBySensorType(
+      {required String name}) async {
+    setNodeState(LoadingTreeNodeState());
+    final filteredAssets = await compute<List<AssetEntity>, List<AssetEntity>>(
+      (assets) {
+        return assets
+            .where((asset) => (asset.sensorType.toString() == name))
+            .toList();
+      },
+      _assets,
+    );
+
+    return filteredAssets;
+  }
+
+  Future<List<AssetEntity>> filterAssetsByStatus({required String name}) async {
+    setNodeState(LoadingTreeNodeState());
+    final filteredAssets = await compute<List<AssetEntity>, List<AssetEntity>>(
+      (assets) {
+        return assets
+            .where((asset) => (asset.status.toString() == name))
+            .toList();
+      },
+      _assets,
+    );
+
+    return filteredAssets;
   }
 
   TreeNodeEntity _convertToTreeNode(LocationEntity item) {
