@@ -60,7 +60,10 @@ flutter pub get
 
 # Instruçoes de Envio
 
-**Link do Video**: [Assistir ao vídeo](./assets/video/tractian_challenge.mp4)
+**Link do Video**: 
+[`Assistir ao vídeo`](./assets/video/tractian_challenge.mp4).
+
+Caso algum problema ocorra a qui esta o link do video hospeado no Youtube [`Video - Youtube`](https://youtu.be/cRni5hjPc4g).
 
 
 **Potons de Melhoria**: 
