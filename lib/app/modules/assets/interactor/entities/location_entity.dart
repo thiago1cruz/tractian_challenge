@@ -14,13 +14,5 @@ class LocationEntity {
     required this.parentId,
   });
 
- factory LocationEntity.fromJson(Map<String, dynamic> json) {
-    return LocationEntity(
-      id: json['id'],
-      name: json['name'],
-      parentId: json['parentId'],
-    );
-  }
-
   String? get status => null;
 }

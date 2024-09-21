@@ -29,34 +29,6 @@ class TreeNodeEntity {
   }
 }
 
-
-enum Status {
-  operating, alert, unknown;
-
-  String? get name {
-    switch (this) {
-      case operating:
-        return 'operating';
-      case alert:
-        return 'alert';
-      default:
-       return null;
-    }
-  }
-
-   static Status fromName(String? name) { 
-    switch (name) {
-      case 'operating':
-        return operating;
-      case 'alert':
-        return alert;
-      default:
-        return unknown;
-    }
-  } 
-}
-
-
 enum Type {
   location, asset, component;
 
