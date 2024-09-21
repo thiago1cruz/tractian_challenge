@@ -37,10 +37,13 @@ class TreeNodeController extends ChangeNotifier {
 
   Future<void> loadTreeData() async {
     setNodeState(LoadingTreeNodeState());
-    List<TreeNodeEntity> rootNodes = [
-      ..._locations.where((e) => e.parentId == null).map(_convertToTreeNode),
+    List<TreeNodeEntity> rootNodes = await compute<List<LocationEntity>, List<TreeNodeEntity>>(
+      (locations) => [
+      ...locations.where((e) => e.parentId == null).map(_convertToTreeNode),
       ..._treeBuilder.orphanAssets.map(_convertToTreeNodeFromAsset),
-    ];
+      ],
+      _locations,
+    );
     _notFilteredNode = rootNodes;
     setNodeState(SuccessTreeNodeState(data: rootNodes));
   }
